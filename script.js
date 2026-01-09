@@ -156,18 +156,25 @@ function loadPreferences() { }
 function updateFlags() {
     const getCode = (curr) => curr.slice(0, 2).toLowerCase();
 
-    const setFlag = (img, currency) => {
+    const setFlag = (img, fallbackIcon, currency) => {
         const code = getCode(currency);
+
+        // Reset state
+        img.style.display = 'block';
+        fallbackIcon.style.display = 'none';
+
+        // Try loading flag
         img.src = `https://flagcdn.com/w40/${code}.png`;
 
-        // Error Handling: If flag not found, show transparent or generic icon
+        // Error Handling: Hide image, show icon
         img.onerror = () => {
-            img.src = 'https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/un.svg';
+            img.style.display = 'none';
+            fallbackIcon.style.display = 'block';
         };
     };
 
-    setFlag(fromFlag, fromCurrency.value);
-    setFlag(toFlag, toCurrency.value);
+    setFlag(fromFlag, document.getElementById('from-fallback'), fromCurrency.value);
+    setFlag(toFlag, document.getElementById('to-fallback'), toCurrency.value);
 }
 
 // Events

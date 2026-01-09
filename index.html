@@ -55,7 +55,11 @@
                     <div class="currency-box">
                         <span class="label-text">Satılan</span>
                         <div class="select-container">
-                            <img src="" alt="" id="from-flag">
+                            <div class="flag-wrapper">
+                                <img src="" alt="" id="from-flag">
+                                <i class="fa-solid fa-coins fallback-icon" id="from-fallback"
+                                    style="display: none;"></i>
+                            </div>
                             <select id="from-currency"></select>
                         </div>
                     </div>
@@ -71,7 +75,10 @@
                     <div class="currency-box">
                         <span class="label-text">Alınan</span>
                         <div class="select-container">
-                            <img src="" alt="" id="to-flag">
+                            <div class="flag-wrapper">
+                                <img src="" alt="" id="to-flag">
+                                <i class="fa-solid fa-coins fallback-icon" id="to-fallback" style="display: none;"></i>
+                            </div>
                             <select id="to-currency"></select>
                         </div>
                     </div>
