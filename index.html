@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Döviz Çevirici | Modern & Hızlı</title>
+    <meta name="description" content="Güncel kurlarla anlık döviz çevirici. Mobil uyumlu ve modern tasarım.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <div class="converter-card glass">
+            <header>
+                <h1>Döviz Çevirici</h1>
+                <p>Anlık Piyasa Kurları</p>
+            </header>
+
+            <form id="currency-form">
+                <div class="amount-group">
+                    <label for="amount">Miktar</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-wallet"></i>
+                        <input type="number" id="amount" value="1" min="0" step="any" placeholder="Miktar giriniz...">
+                    </div>
+                </div>
+
+                <div class="currency-selectors">
+                    <div class="currency-box from">
+                        <label>Para Birimi</label>
+                        <div class="select-container">
+                            <img src="https://flagcdn.com/w40/us.png" alt="Flag" id="from-flag">
+                            <select id="from-currency"></select>
+                        </div>
+                    </div>
+
+                    <div class="swap-icon" id="swap-btn" title="Değiştir">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </div>
+
+                    <div class="currency-box to">
+                        <label>Hedef</label>
+                        <div class="select-container">
+                            <img src="https://flagcdn.com/w40/tr.png" alt="Flag" id="to-flag">
+                            <select id="to-currency"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-display">
+                    <div class="conversion-text">
+                        <span id="amount-text">1 USD =</span>
+                        <span id="result-text">... TRY</span>
+                    </div>
+                    <div class="exchange-rate-info">
+                        Oran: <span id="rate-info">Yükleniyor...</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="convert-btn">
+                    Çevir <i class="fa-solid fa-paper-plane"></i>
+                </button>
+                
+                <div class="last-updated">
+                    <i class="fa-regular fa-clock"></i> Son Güncelleme: <span id="last-updated-time">--:--</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
