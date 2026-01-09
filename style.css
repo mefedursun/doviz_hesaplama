@@ -325,7 +325,7 @@ header p {
 }
 
 /* Responsiveness */
-@media (max-width: 380px) {
+@media (max-width: 600px) {
     .currency-selectors {
         flex-direction: column;
     }

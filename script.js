@@ -55,12 +55,19 @@ async function fetchRates() {
 
 // Initialize Dropdowns
 function initSelects(ratesObj) {
-    if (fromCurrency.options.length > 0) return; // Already loaded
+    if (fromCurrency.options.length > 0) return;
 
-    const currencies = Object.keys(ratesObj);
+    let currencies = Object.keys(ratesObj);
+
+    // Priority Sorting: TRY, USD, EUR, GBP, JPY first
+    const topCurrencies = ['TRY', 'USD', 'EUR', 'GBP', 'JPY'];
+    // Filter out top currencies from the main list so we don't duplicate
+    const others = currencies.filter(c => !topCurrencies.includes(c)).sort();
+    // Combine
+    const sortedCurrencies = [...topCurrencies, ...others];
 
     // Create options
-    currencies.forEach(code => {
+    sortedCurrencies.forEach(code => {
         // From
         const opt1 = document.createElement('option');
         opt1.value = code;
@@ -84,7 +91,16 @@ function initSelects(ratesObj) {
 
 // Logic
 function convert() {
-    const amount = parseFloat(amountInput.value);
+    const val = amountInput.value.trim();
+
+    // Empty State Handling
+    if (val === '') {
+        resultText.innerText = '0.00';
+        baseAmountDisplay.innerText = `${fromCurrency.value}`;
+        return;
+    }
+
+    const amount = parseFloat(val);
     const from = fromCurrency.value;
     const to = toCurrency.value;
 
@@ -96,18 +112,24 @@ function convert() {
     const result = (amount / baseRate) * targetRate;
     const oneUnit = (1 / baseRate) * targetRate;
 
+    // Smart Precision for Crypto/Low Value
+    let fractionDigits = 2;
+    if (result > 0 && result < 0.01) {
+        fractionDigits = 6;
+    }
+
     // Display
     const currencyFormatter = new Intl.NumberFormat('tr-TR', {
         style: 'currency',
         currency: to,
-        maximumFractionDigits: 2
+        maximumFractionDigits: fractionDigits
     });
 
     resultText.innerText = currencyFormatter.format(result);
     baseAmountDisplay.innerText = `${amount} ${from} =`;
     rateBadge.innerText = `1 ${from} ≈ ${oneUnit.toFixed(4)} ${to}`;
 
-    // Styling reset if error happened previously
+    // Styling reset
     rateBadge.style.backgroundColor = "";
     rateBadge.style.color = "";
 
@@ -128,16 +150,24 @@ function getStoredSettings() {
     return saved ? JSON.parse(saved) : {};
 }
 
-function loadPreferences() {
-    // Just to have amount persistence optional? 
-    // For now we persist in initSelects after options are built
-}
+function loadPreferences() { }
 
 // Flags
 function updateFlags() {
     const getCode = (curr) => curr.slice(0, 2).toLowerCase();
-    fromFlag.src = `https://flagcdn.com/w40/${getCode(fromCurrency.value)}.png`;
-    toFlag.src = `https://flagcdn.com/w40/${getCode(toCurrency.value)}.png`;
+
+    const setFlag = (img, currency) => {
+        const code = getCode(currency);
+        img.src = `https://flagcdn.com/w40/${code}.png`;
+
+        // Error Handling: If flag not found, show transparent or generic icon
+        img.onerror = () => {
+            img.src = 'https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/un.svg';
+        };
+    };
+
+    setFlag(fromFlag, fromCurrency.value);
+    setFlag(toFlag, toCurrency.value);
 }
 
 // Events
@@ -146,7 +176,6 @@ fromCurrency.addEventListener('change', () => { updateFlags(); convert(); });
 toCurrency.addEventListener('change', () => { updateFlags(); convert(); });
 
 swapBtn.addEventListener('click', () => {
-    // UI Animation class trigger could go here
     const temp = fromCurrency.value;
     fromCurrency.value = toCurrency.value;
     toCurrency.value = temp;
