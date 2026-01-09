@@ -1,4 +1,4 @@
-# Currency Converter Pro 🌍
+# Döviz Çevirici Pro 🌍
 
 [![Live Demo](https://img.shields.io/badge/demo-online-green?style=for-the-badge&logo=github)](https://mefedursun.github.io/doviz_hesaplama/)
 ![License](https://img.shields.io/github/license/mefedursun/doviz_hesaplama?style=flat-square&color=blue)
