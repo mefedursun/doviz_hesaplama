@@ -40,6 +40,7 @@ doviz_hesaplama/
 ├── index.html      # Semantik Ana Yapı
 ├── style.css       # Premium Theme & Responsive Kuralları
 ├── script.js       # API Logic, Caching & State Management
+├── preview.png     # Proje Önizleme Görseli
 ├── README.md       # Dokümantasyon
 └── LICENSE         # MIT Lisans Dosyası
 ```
